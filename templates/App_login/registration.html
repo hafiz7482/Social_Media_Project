@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %} Registration {% endblock title %}
+{% block body %}
+<center>
+<div class="container">
+    <div class="row my-3">
+        <div class="col-sm-8 offset-sm-2">
+            <form action="#" method="POST" novalidate class="shadow p-5">
+                <h3 class="text-center text-success fw-bold"> User Registration </h3>
+                {% csrf_token %}
+                {% for fm in form %}
+                    {{fm.label_tag}} {{ fm }} <small class="text-danger">{{fm.errors | striptags }}</small> <br>
+                {% endfor %}
+                <input type="submit" value="Submit" style="width:100%" class="btn btn-success mt-4 fw-bold"> <br> <br>
+                <div class="text-center text-success fw-bold">
+                    <p> Have an account? <a href="{% url 'App_login:login' %}" class="text-danger"> Login Now</a> </p>
+                </div>
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <p class="alert alert-danger my-3">{{error}}</p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if messages %}
+                    {% for msg in messages %}
+                    <div class="alert alert-{{msg.tags}}" role="alert">
+                        {{msg}}
+                    </div>
+                    {% endfor %} 
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+</center>
+{% endblock body %}
